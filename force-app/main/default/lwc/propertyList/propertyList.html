@@ -1,0 +1,27 @@
+<template>
+    <lightning-card title="Properties">
+        <div class="filters slds-grid slds-wrap slds-gutters">
+            <lightning-input class="slds-col slds-size_1-of-1 slds-medium-size_1-of-6" type="number" label="Min Rent" value={filters.minRent} data-field="minRent" onchange={handleFilterChange}></lightning-input>
+            <lightning-input class="slds-col slds-size_1-of-1 slds-medium-size_1-of-6" type="number" label="Max Rent" value={filters.maxRent} data-field="maxRent" onchange={handleFilterChange}></lightning-input>
+            <lightning-combobox class="slds-col slds-size_1-of-1 slds-medium-size_1-of-6" label="Availability" value={filters.availabilityStatus} options={statusOptions} data-field="availabilityStatus" onchange={handleFilterChange}></lightning-combobox>
+            <lightning-combobox class="slds-col slds-size_1-of-1 slds-medium-size_1-of-6" label="Furnishing" value={filters.furnishingStatus} options={furnishingOptions} data-field="furnishingStatus" onchange={handleFilterChange}></lightning-combobox>
+            <lightning-input class="slds-col slds-size_1-of-1 slds-medium-size_1-of-6" type="number" label="Nearby Km" value={filters.distanceKm} data-field="distanceKm" onchange={handleFilterChange}></lightning-input>
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-6 action-cell">
+                <lightning-button label="Use My Location" onclick={useLocation}></lightning-button>
+            </div>
+        </div>
+
+        <div class="slds-m-around_medium">
+            <lightning-button label="Search" variant="brand" onclick={loadProperties}></lightning-button>
+            <lightning-button class="slds-m-left_small" label="Clear" onclick={clearFilters}></lightning-button>
+        </div>
+
+        <lightning-datatable key-field="Id" data={properties} columns={columns} hide-checkbox-column></lightning-datatable>
+
+        <div class="pager slds-m-around_medium">
+            <lightning-button-icon icon-name="utility:chevronleft" title="Previous" onclick={previousPage} disabled={disablePrevious}></lightning-button-icon>
+            <span class="slds-m-horizontal_medium">Page {pageNumber} of {totalPages}</span>
+            <lightning-button-icon icon-name="utility:chevronright" title="Next" onclick={nextPage} disabled={disableNext}></lightning-button-icon>
+        </div>
+    </lightning-card>
+</template>

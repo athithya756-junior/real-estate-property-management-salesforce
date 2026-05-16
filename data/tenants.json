@@ -1,0 +1,16 @@
+{
+  "records": [
+    {
+      "attributes": { "type": "Tenant__c", "referenceId": "Tenant1" },
+      "Name": "Arjun Kumar",
+      "Phone__c": "9888888881",
+      "Email__c": "arjun@example.com"
+    },
+    {
+      "attributes": { "type": "Tenant__c", "referenceId": "Tenant2" },
+      "Name": "Priya Raman",
+      "Phone__c": "9888888882",
+      "Email__c": "priya@example.com"
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <applicationVisibilities>
+        <application>Real_Estate_Property_Management</application>
+        <visible>true</visible>
+    </applicationVisibilities>
+    <classAccesses><apexClass>GeocodingService</apexClass><enabled>true</enabled></classAccesses>
+    <classAccesses><apexClass>LeaseAgreementController</apexClass><enabled>true</enabled></classAccesses>
+    <classAccesses><apexClass>LeaseAgreementEmailService</apexClass><enabled>true</enabled></classAccesses>
+    <classAccesses><apexClass>LeaseReminderScheduler</apexClass><enabled>true</enabled></classAccesses>
+    <classAccesses><apexClass>MaintenanceRequestController</apexClass><enabled>true</enabled></classAccesses>
+    <classAccesses><apexClass>MaintenanceRequestService</apexClass><enabled>true</enabled></classAccesses>
+    <classAccesses><apexClass>PropertyController</apexClass><enabled>true</enabled></classAccesses>
+    <classAccesses><apexClass>PropertyService</apexClass><enabled>true</enabled></classAccesses>
+    <classAccesses><apexClass>ReportingController</apexClass><enabled>true</enabled></classAccesses>
+    <classAccesses><apexClass>TenantController</apexClass><enabled>true</enabled></classAccesses>
+    <description>Access for Real Estate Property Management users.</description>
+    <fieldPermissions><editable>true</editable><field>Lease_Agreement__c.Status__c</field><readable>true</readable></fieldPermissions>
+    <fieldPermissions><editable>true</editable><field>Lease_Agreement__c.Terms__c</field><readable>true</readable></fieldPermissions>
+    <fieldPermissions><editable>true</editable><field>Maintenance_Request__c.Description__c</field><readable>true</readable></fieldPermissions>
+    <fieldPermissions><editable>true</editable><field>Maintenance_Request__c.Vendor__c</field><readable>true</readable></fieldPermissions>
+    <fieldPermissions><editable>true</editable><field>Property__c.Description__c</field><readable>true</readable></fieldPermissions>
+    <fieldPermissions><editable>true</editable><field>Property__c.Furnishing_Status__c</field><readable>true</readable></fieldPermissions>
+    <fieldPermissions><editable>true</editable><field>Property__c.Location__c</field><readable>true</readable></fieldPermissions>
+    <fieldPermissions><editable>true</editable><field>Tenant__c.Email__c</field><readable>true</readable></fieldPermissions>
+    <fieldPermissions><editable>true</editable><field>Tenant__c.Phone__c</field><readable>true</readable></fieldPermissions>
+    <fieldPermissions><editable>true</editable><field>Vendor__c.Email__c</field><readable>true</readable></fieldPermissions>
+    <fieldPermissions><editable>true</editable><field>Vendor__c.Phone__c</field><readable>true</readable></fieldPermissions>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Real Estate Manager</label>
+    <objectPermissions><allowCreate>true</allowCreate><allowDelete>true</allowDelete><allowEdit>true</allowEdit><allowRead>true</allowRead><modifyAllRecords>false</modifyAllRecords><object>Lease_Agreement__c</object><viewAllRecords>false</viewAllRecords></objectPermissions>
+    <objectPermissions><allowCreate>true</allowCreate><allowDelete>true</allowDelete><allowEdit>true</allowEdit><allowRead>true</allowRead><modifyAllRecords>false</modifyAllRecords><object>Maintenance_Request__c</object><viewAllRecords>false</viewAllRecords></objectPermissions>
+    <objectPermissions><allowCreate>true</allowCreate><allowDelete>true</allowDelete><allowEdit>true</allowEdit><allowRead>true</allowRead><modifyAllRecords>false</modifyAllRecords><object>Property__c</object><viewAllRecords>false</viewAllRecords></objectPermissions>
+    <objectPermissions><allowCreate>true</allowCreate><allowDelete>true</allowDelete><allowEdit>true</allowEdit><allowRead>true</allowRead><modifyAllRecords>false</modifyAllRecords><object>Tenant__c</object><viewAllRecords>false</viewAllRecords></objectPermissions>
+    <objectPermissions><allowCreate>true</allowCreate><allowDelete>true</allowDelete><allowEdit>true</allowEdit><allowRead>true</allowRead><modifyAllRecords>false</modifyAllRecords><object>Vendor__c</object><viewAllRecords>false</viewAllRecords></objectPermissions>
+    <tabSettings><tab>Lease_Agreement__c</tab><visibility>Visible</visibility></tabSettings>
+    <tabSettings><tab>Lease_Agreement_Management</tab><visibility>Visible</visibility></tabSettings>
+    <tabSettings><tab>Maintenance_Request__c</tab><visibility>Visible</visibility></tabSettings>
+    <tabSettings><tab>Maintenance_Management</tab><visibility>Visible</visibility></tabSettings>
+    <tabSettings><tab>Property__c</tab><visibility>Visible</visibility></tabSettings>
+    <tabSettings><tab>Property_Management</tab><visibility>Visible</visibility></tabSettings>
+    <tabSettings><tab>Real_Estate_Dashboard</tab><visibility>Visible</visibility></tabSettings>
+    <tabSettings><tab>Tenant__c</tab><visibility>Visible</visibility></tabSettings>
+    <tabSettings><tab>Tenant_Management</tab><visibility>Visible</visibility></tabSettings>
+    <tabSettings><tab>Vendor__c</tab><visibility>Visible</visibility></tabSettings>
+</PermissionSet>

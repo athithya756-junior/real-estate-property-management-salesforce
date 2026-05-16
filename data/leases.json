@@ -1,0 +1,14 @@
+{
+  "records": [
+    {
+      "attributes": { "type": "Lease_Agreement__c", "referenceId": "Lease1" },
+      "Tenant__c": "@Tenant1",
+      "Property__c": "@Property1",
+      "Terms__c": "Standard residential lease terms.",
+      "Agreed_Monthly_Rent__c": 42000,
+      "Start_Date__c": "2026-05-01",
+      "End_Date__c": "2027-04-30",
+      "Status__c": "Active"
+    }
+  ]
+}

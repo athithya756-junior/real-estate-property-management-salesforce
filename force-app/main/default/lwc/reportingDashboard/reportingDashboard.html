@@ -1,0 +1,25 @@
+<template>
+    <lightning-card title="Real Estate Dashboard">
+        <template if:true={metrics}>
+            <div class="dashboard slds-p-around_medium">
+                <section>
+                    <span class="label">Expiring in 30 Days</span>
+                    <strong>{metrics.expiringLeasesNext30Days}</strong>
+                </section>
+                <section>
+                    <span class="label">Occupancy Rate</span>
+                    <strong>{occupancyRate}%</strong>
+                </section>
+                <section>
+                    <span class="label">Maintenance by Status</span>
+                    <template for:each={statusRows} for:item="row">
+                        <div key={row.status} class="status-row">
+                            <span>{row.status}</span>
+                            <strong>{row.count}</strong>
+                        </div>
+                    </template>
+                </section>
+            </div>
+        </template>
+    </lightning-card>
+</template>

@@ -1,0 +1,22 @@
+<template>
+    <lightning-card title="Create Property">
+        <div class="slds-p-around_medium">
+            <lightning-record-edit-form object-api-name="Property__c" onsubmit={handleSubmit}>
+                <lightning-messages></lightning-messages>
+                <lightning-input-field field-name="Name"></lightning-input-field>
+                <lightning-input-field field-name="Address__c"></lightning-input-field>
+                <lightning-input-field field-name="City__c"></lightning-input-field>
+                <lightning-input-field field-name="State__c"></lightning-input-field>
+                <lightning-input-field field-name="Postal_Code__c"></lightning-input-field>
+                <lightning-input-field field-name="Country__c"></lightning-input-field>
+                <lightning-input-field field-name="Type__c"></lightning-input-field>
+                <lightning-input-field field-name="Furnishing_Status__c"></lightning-input-field>
+                <lightning-input-field field-name="Status__c"></lightning-input-field>
+                <lightning-input-field field-name="Rent__c"></lightning-input-field>
+                <lightning-input-field field-name="Description__c"></lightning-input-field>
+                <lightning-input type="file" label="Property Images" multiple accept="image/*" onchange={handleFiles}></lightning-input>
+                <lightning-button class="slds-m-top_medium" type="submit" variant="brand" label="Create Property" disabled={isSaving}></lightning-button>
+            </lightning-record-edit-form>
+        </div>
+    </lightning-card>
+</template>

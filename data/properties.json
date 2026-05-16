@@ -1,0 +1,36 @@
+{
+  "records": [
+    {
+      "attributes": { "type": "Property__c", "referenceId": "Property1" },
+      "Name": "Adyar Lake View Apartment",
+      "Address__c": "12 Lake Road",
+      "City__c": "Chennai",
+      "State__c": "Tamil Nadu",
+      "Postal_Code__c": "600020",
+      "Country__c": "India",
+      "Type__c": "Residential",
+      "Furnishing_Status__c": "Furnished",
+      "Status__c": "Occupied",
+      "Rent__c": 42000,
+      "Description__c": "Two bedroom apartment near Adyar.",
+      "Location__Latitude__s": 13.0067,
+      "Location__Longitude__s": 80.2578
+    },
+    {
+      "attributes": { "type": "Property__c", "referenceId": "Property2" },
+      "Name": "OMR Commercial Suite",
+      "Address__c": "200 IT Expressway",
+      "City__c": "Chennai",
+      "State__c": "Tamil Nadu",
+      "Postal_Code__c": "600096",
+      "Country__c": "India",
+      "Type__c": "Commercial",
+      "Furnishing_Status__c": "Semi-Furnished",
+      "Status__c": "Available",
+      "Rent__c": 125000,
+      "Description__c": "Commercial office suite on OMR.",
+      "Location__Latitude__s": 12.9279,
+      "Location__Longitude__s": 80.2311
+    }
+  ]
+}

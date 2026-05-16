@@ -1,0 +1,15 @@
+<template>
+    <lightning-card title="Lease Agreements">
+        <div class="slds-p-around_medium form-grid">
+            <lightning-combobox label="Tenant" value={agreement.Tenant__c} options={tenantOptions} data-field="Tenant__c" onchange={handleChange}></lightning-combobox>
+            <lightning-combobox label="Property" value={agreement.Property__c} options={propertyOptions} data-field="Property__c" onchange={handleChange}></lightning-combobox>
+            <lightning-input type="number" label="Monthly Rent" value={agreement.Agreed_Monthly_Rent__c} data-field="Agreed_Monthly_Rent__c" onchange={handleChange}></lightning-input>
+            <lightning-input type="date" label="Start Date" value={agreement.Start_Date__c} data-field="Start_Date__c" onchange={handleChange}></lightning-input>
+            <lightning-input type="date" label="End Date" value={agreement.End_Date__c} data-field="End_Date__c" onchange={handleChange}></lightning-input>
+            <lightning-combobox label="Status" value={agreement.Status__c} options={statusOptions} data-field="Status__c" onchange={handleChange}></lightning-combobox>
+            <lightning-textarea label="Terms" value={agreement.Terms__c} data-field="Terms__c" onchange={handleChange}></lightning-textarea>
+            <lightning-button label="Create Agreement" variant="brand" onclick={saveAgreement}></lightning-button>
+        </div>
+        <lightning-datatable key-field="Id" data={agreements} columns={columns} hide-checkbox-column></lightning-datatable>
+    </lightning-card>
+</template>

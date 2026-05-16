@@ -1,0 +1,7 @@
+.sfdx/
+.sf/
+.localdevserver/
+node_modules/
+coverage/
+*.log
+*.zip

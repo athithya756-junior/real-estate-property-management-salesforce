@@ -1,0 +1,16 @@
+{
+  "records": [
+    {
+      "attributes": { "type": "Vendor__c", "referenceId": "Vendor1" },
+      "Name": "Mallow Plumbing Services",
+      "Phone__c": "9000000001",
+      "Email__c": "plumbing@example.com"
+    },
+    {
+      "attributes": { "type": "Vendor__c", "referenceId": "Vendor2" },
+      "Name": "Prime Electrical Works",
+      "Phone__c": "9000000002",
+      "Email__c": "electrical@example.com"
+    }
+  ]
+}

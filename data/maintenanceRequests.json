@@ -1,0 +1,18 @@
+{
+  "records": [
+    {
+      "attributes": { "type": "Maintenance_Request__c", "referenceId": "Request1" },
+      "Property__c": "@Property1",
+      "Vendor__c": "@Vendor1",
+      "Status__c": "Open",
+      "Description__c": "Kitchen sink leakage reported by tenant."
+    },
+    {
+      "attributes": { "type": "Maintenance_Request__c", "referenceId": "Request2" },
+      "Property__c": "@Property2",
+      "Vendor__c": "@Vendor2",
+      "Status__c": "In Progress",
+      "Description__c": "Lighting fixture replacement."
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+<template>
+    <lightning-card title="Property Location">
+        <template if:true={mapMarkers.length}>
+            <lightning-map map-markers={mapMarkers} zoom-level="14"></lightning-map>
+        </template>
+        <template if:false={mapMarkers.length}>
+            <div class="slds-p-around_medium">No geocoded location is available.</div>
+        </template>
+    </lightning-card>
+</template>

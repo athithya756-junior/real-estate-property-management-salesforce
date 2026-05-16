@@ -1,0 +1,32 @@
+[
+  {
+    "sobject": "Property__c",
+    "saveRefs": true,
+    "resolveRefs": false,
+    "files": ["properties.json"]
+  },
+  {
+    "sobject": "Tenant__c",
+    "saveRefs": true,
+    "resolveRefs": false,
+    "files": ["tenants.json"]
+  },
+  {
+    "sobject": "Vendor__c",
+    "saveRefs": true,
+    "resolveRefs": false,
+    "files": ["vendors.json"]
+  },
+  {
+    "sobject": "Lease_Agreement__c",
+    "saveRefs": false,
+    "resolveRefs": true,
+    "files": ["leases.json"]
+  },
+  {
+    "sobject": "Maintenance_Request__c",
+    "saveRefs": false,
+    "resolveRefs": true,
+    "files": ["maintenanceRequests.json"]
+  }
+]

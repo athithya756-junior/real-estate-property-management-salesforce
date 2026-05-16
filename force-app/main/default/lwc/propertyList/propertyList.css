@@ -1,0 +1,14 @@
+.filters {
+    padding: 1rem;
+}
+
+.action-cell {
+    display: flex;
+    align-items: end;
+}
+
+.pager {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
