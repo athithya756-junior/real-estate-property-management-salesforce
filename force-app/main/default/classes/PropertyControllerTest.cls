@@ -39,6 +39,27 @@ private class PropertyControllerTest {
     }
 
     @IsTest
+    static void geocodePropertyUpdatesExistingPropertyLocation() {
+        Test.setMock(HttpCalloutMock.class, new MockGeocodingResponse());
+        Property__c propertyRecord = RealEstateTestDataFactory.buildProperty('Existing');
+        insert propertyRecord;
+
+        Test.startTest();
+        GeocodingService.GeocodeResult result = PropertyController.geocodeProperty(propertyRecord.Id);
+        Test.stopTest();
+
+        Property__c saved = [
+            SELECT Location__Latitude__s, Location__Longitude__s
+            FROM Property__c
+            WHERE Id = :propertyRecord.Id
+        ];
+        System.assertEquals(13.0827, result.latitude);
+        System.assertEquals(80.2707, result.longitude);
+        System.assertEquals(13.0827, saved.Location__Latitude__s);
+        System.assertEquals(80.2707, saved.Location__Longitude__s);
+    }
+
+    @IsTest
     static void searchPropertiesPaginatesAndFilters() {
         List<Property__c> properties = new List<Property__c>();
         for (Integer i = 0; i < 30; i++) {

@@ -25,15 +25,6 @@ public with sharing class LeaseAgreementController {
     @AuraEnabled
     public static Id createAgreement(Lease_Agreement__c agreement) {
         insert agreement;
-        update new Property__c(Id = agreement.Property__c, Status__c = 'Occupied');
-        Task task = new Task(
-            WhatId = agreement.Id,
-            Subject = 'Generate lease agreement',
-            Status = 'Not Started',
-            Priority = 'Normal',
-            ActivityDate = Date.today().addDays(1)
-        );
-        insert task;
         return agreement.Id;
     }
 

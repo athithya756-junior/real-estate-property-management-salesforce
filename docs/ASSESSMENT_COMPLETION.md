@@ -19,7 +19,7 @@ This checklist maps the mini-project brief to the deployable project.
 - Property geocoding and record-page map component.
 - Tenant list view.
 - Lease agreement list/create flow.
-- Task creation when a lease agreement is created.
+- Task creation when a lease agreement is created from any entry point.
 - Lease PDF download and email to tenant using jsPDF.
 - Scheduled Apex class for 30-day and 1-day lease expiry reminders.
 - Vendor and maintenance request objects.
@@ -44,7 +44,8 @@ Or run the steps separately:
 sf org assign permset --name Real_Estate_Manager --target-org "RealEstate Demo"
 ```
 
-- Create/configure the `Google_Geocoding` named credential with the Google Maps API endpoint and API key/secret. Salesforce does not deploy live secrets in source metadata.
+- Create/configure the `Google_Geocoding` named credential with `https://maps.googleapis.com`.
+- Update the `Google_Maps_API_Key` custom label with the Google Maps Platform API key.
 
 - Schedule lease reminders:
 

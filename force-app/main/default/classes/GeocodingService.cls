@@ -48,8 +48,9 @@ public with sharing class GeocodingService {
     }
 
     private static String buildAddress(Property__c propertyRecord) {
+        String streetAddress = String.isBlank(propertyRecord.Address__c) ? propertyRecord.Name : propertyRecord.Address__c;
         List<String> parts = new List<String>{
-            propertyRecord.Address__c,
+            streetAddress,
             propertyRecord.City__c,
             propertyRecord.State__c,
             propertyRecord.Postal_Code__c,
@@ -66,6 +67,12 @@ public with sharing class GeocodingService {
 
     @TestVisible
     private static String buildEndpoint(String address) {
-        return 'callout:Google_Geocoding/maps/api/geocode/json?address=' + EncodingUtil.urlEncode(address, 'UTF-8');
+        String endpoint = 'callout:Google_Geocoding/maps/api/geocode/json?address=' +
+            EncodingUtil.urlEncode(address, 'UTF-8');
+        String apiKey = System.Label.Google_Maps_API_Key;
+        if (!String.isBlank(apiKey) && apiKey != 'REPLACE_WITH_GOOGLE_MAPS_API_KEY') {
+            endpoint += '&key=' + EncodingUtil.urlEncode(apiKey.trim(), 'UTF-8');
+        }
+        return endpoint;
     }
 }

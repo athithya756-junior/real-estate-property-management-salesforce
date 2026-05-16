@@ -55,6 +55,34 @@ public with sharing class PropertyController {
         return PropertyService.createProperty(propertyRecord, files);
     }
 
+    @AuraEnabled
+    public static GeocodingService.GeocodeResult geocodeProperty(Id propertyId) {
+        if (propertyId == null) {
+            throw new AuraHandledException('Property Id is required.');
+        }
+
+        Property__c propertyRecord = [
+            SELECT Name, Address__c, City__c, State__c, Postal_Code__c, Country__c
+            FROM Property__c
+            WHERE Id = :propertyId
+            LIMIT 1
+        ];
+
+        try {
+            GeocodingService.GeocodeResult geocode = GeocodingService.geocode(propertyRecord);
+            if (geocode == null) {
+                throw new AuraHandledException('Add a property address before loading the map.');
+            }
+
+            propertyRecord.Location__Latitude__s = geocode.latitude;
+            propertyRecord.Location__Longitude__s = geocode.longitude;
+            update propertyRecord;
+            return geocode;
+        } catch (GeocodingService.GeocodingException error) {
+            throw new AuraHandledException(error.getMessage());
+        }
+    }
+
     private static List<String> buildWhereClauses(PropertyFilter filter) {
         List<String> clauses = new List<String>();
         if (filter.minRent != null) {

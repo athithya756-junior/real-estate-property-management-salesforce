@@ -46,9 +46,9 @@ Create a Named Credential named `Google_Geocoding` with this URL:
 https://maps.googleapis.com
 ```
 
-Store the API key as an external credential/principal secret, or adapt `GeocodingService.buildEndpoint` to append the key from protected custom metadata in your org. Apex tests use mocks and do not call the live API.
+Set the custom label `Google_Maps_API_Key` to your Google Maps Platform API key. `GeocodingService.buildEndpoint` appends that key to Google Geocoding API requests. Apex tests use mocks and do not call the live API.
 
-This setup is required before using the custom property creation flow, because the property service geocodes the address before saving the record.
+This setup is required before using the custom property creation flow or the property record map. When a record has no saved coordinates, the record map geocodes the property address, saves `Location__c`, and then renders the map.
 
 ## jsPDF Setup
 

@@ -5,8 +5,13 @@
         </template>
         <template if:false={hasMapMarkers}>
             <div class="slds-p-around_medium">
-                <template if:true={errorMessage}>{errorMessage}</template>
-                <template if:false={errorMessage}>No geocoded location is available.</template>
+                <template if:true={isGeocoding}>
+                    <lightning-spinner alternative-text="Geocoding property location" size="small"></lightning-spinner>
+                </template>
+                <template if:false={isGeocoding}>
+                    <template if:true={errorMessage}>{errorMessage}</template>
+                    <template if:false={errorMessage}>No geocoded location is available.</template>
+                </template>
             </div>
         </template>
     </lightning-card>
