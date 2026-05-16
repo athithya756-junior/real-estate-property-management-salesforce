@@ -60,6 +60,20 @@ private class PropertyControllerTest {
     }
 
     @IsTest
+    static void getPropertyLocationReturnsSavedCoordinates() {
+        Property__c propertyRecord = RealEstateTestDataFactory.buildProperty('Mapped');
+        propertyRecord.Location__Latitude__s = 13.0002927;
+        propertyRecord.Location__Longitude__s = 80.2666982;
+        insert propertyRecord;
+
+        PropertyController.PropertyLocation location = PropertyController.getPropertyLocation(propertyRecord.Id);
+
+        System.assertEquals(propertyRecord.Name, location.propertyName);
+        System.assertEquals(13.0002927, location.latitude);
+        System.assertEquals(80.2666982, location.longitude);
+    }
+
+    @IsTest
     static void searchPropertiesPaginatesAndFilters() {
         List<Property__c> properties = new List<Property__c>();
         for (Integer i = 0; i < 30; i++) {

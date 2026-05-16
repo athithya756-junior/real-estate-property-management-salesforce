@@ -19,6 +19,12 @@ public with sharing class PropertyController {
         @AuraEnabled public Boolean hasNext;
     }
 
+    public class PropertyLocation {
+        @AuraEnabled public String propertyName;
+        @AuraEnabled public Decimal latitude;
+        @AuraEnabled public Decimal longitude;
+    }
+
     private static final Integer PAGE_SIZE = 25;
 
     @AuraEnabled(cacheable=true)
@@ -81,6 +87,42 @@ public with sharing class PropertyController {
         } catch (GeocodingService.GeocodingException error) {
             throw new AuraHandledException(error.getMessage());
         }
+    }
+
+    @AuraEnabled
+    public static PropertyLocation getPropertyLocation(Id propertyId) {
+        if (propertyId == null) {
+            throw new AuraHandledException('Property Id is required.');
+        }
+
+        Property__c propertyRecord = [
+            SELECT Id, Name, Address__c, City__c, State__c, Postal_Code__c, Country__c,
+                Location__Latitude__s, Location__Longitude__s
+            FROM Property__c
+            WHERE Id = :propertyId
+            LIMIT 1
+        ];
+
+        if (propertyRecord.Location__Latitude__s == null || propertyRecord.Location__Longitude__s == null) {
+            try {
+                GeocodingService.GeocodeResult geocode = GeocodingService.geocode(propertyRecord);
+                if (geocode == null) {
+                    throw new AuraHandledException('Add a property address before loading the map.');
+                }
+
+                propertyRecord.Location__Latitude__s = geocode.latitude;
+                propertyRecord.Location__Longitude__s = geocode.longitude;
+                update propertyRecord;
+            } catch (GeocodingService.GeocodingException error) {
+                throw new AuraHandledException(error.getMessage());
+            }
+        }
+
+        PropertyLocation location = new PropertyLocation();
+        location.propertyName = propertyRecord.Name;
+        location.latitude = propertyRecord.Location__Latitude__s;
+        location.longitude = propertyRecord.Location__Longitude__s;
+        return location;
     }
 
     private static List<String> buildWhereClauses(PropertyFilter filter) {

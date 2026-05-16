@@ -14,12 +14,15 @@ public with sharing class PropertyService {
         }
 
         GeocodingService.GeocodeResult geocode = GeocodingService.geocode(propertyRecord);
-        if (geocode != null) {
-            propertyRecord.Location__Latitude__s = geocode.latitude;
-            propertyRecord.Location__Longitude__s = geocode.longitude;
-        }
-
         insert propertyRecord;
+
+        if (geocode != null) {
+            update new Property__c(
+                Id = propertyRecord.Id,
+                Location__Latitude__s = geocode.latitude,
+                Location__Longitude__s = geocode.longitude
+            );
+        }
 
         List<ContentVersion> versions = new List<ContentVersion>();
         for (PropertyFileInput file : files) {

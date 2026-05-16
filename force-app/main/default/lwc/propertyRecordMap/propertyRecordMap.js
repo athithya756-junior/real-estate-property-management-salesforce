@@ -1,59 +1,49 @@
-import { LightningElement, api, wire } from 'lwc';
-import { getFieldValue, getRecord } from 'lightning/uiRecordApi';
-import geocodeProperty from '@salesforce/apex/PropertyController.geocodeProperty';
-import NAME from '@salesforce/schema/Property__c.Name';
-import LATITUDE from '@salesforce/schema/Property__c.Location__Latitude__s';
-import LONGITUDE from '@salesforce/schema/Property__c.Location__Longitude__s';
+import { LightningElement, api } from 'lwc';
+import getPropertyLocation from '@salesforce/apex/PropertyController.getPropertyLocation';
 
 export default class PropertyRecordMap extends LightningElement {
-    @api recordId;
+    _recordId;
     mapMarkers = [];
     errorMessage;
-    isGeocoding = false;
-    hasRequestedGeocode = false;
+    isLoading = false;
 
-    @wire(getRecord, { recordId: '$recordId', fields: [NAME, LATITUDE, LONGITUDE] })
-    wiredProperty({ data, error }) {
-        if (error) {
-            this.mapMarkers = [];
-            this.errorMessage = error.body?.message || 'Unable to load property location fields.';
-            return;
-        }
-
-        if (!data) {
-            return;
-        }
-
-        this.errorMessage = undefined;
-        const latitude = Number(getFieldValue(data, LATITUDE));
-        const longitude = Number(getFieldValue(data, LONGITUDE));
-
-        if (!Number.isFinite(latitude) || !Number.isFinite(longitude)) {
-            this.mapMarkers = [];
-            this.geocodeMissingLocation(data);
-            return;
-        }
-
-        this.setMapMarker(latitude, longitude, getFieldValue(data, NAME));
+    @api
+    get recordId() {
+        return this._recordId;
     }
 
-    async geocodeMissingLocation(record) {
-        if (this.hasRequestedGeocode || this.isGeocoding || !this.recordId) {
+    set recordId(value) {
+        this._recordId = value;
+        if (value) {
+            this.loadLocation();
+        }
+    }
+
+    async loadLocation() {
+        if (!this.recordId) {
             return;
         }
 
-        this.hasRequestedGeocode = true;
-        this.isGeocoding = true;
+        this.isLoading = true;
         this.errorMessage = undefined;
 
         try {
-            const location = await geocodeProperty({ propertyId: this.recordId });
-            this.setMapMarker(location.latitude, location.longitude, getFieldValue(record, NAME));
+            const propertyLocation = await getPropertyLocation({ propertyId: this.recordId });
+            const latitude = Number(propertyLocation.latitude);
+            const longitude = Number(propertyLocation.longitude);
+
+            if (!Number.isFinite(latitude) || !Number.isFinite(longitude)) {
+                this.mapMarkers = [];
+                this.errorMessage = 'No geocoded location is available.';
+                return;
+            }
+
+            this.setMapMarker(latitude, longitude, propertyLocation.propertyName);
         } catch (error) {
             this.mapMarkers = [];
-            this.errorMessage = error.body?.message || 'Unable to geocode this property location.';
+            this.errorMessage = error.body?.message || 'Unable to load this property location.';
         } finally {
-            this.isGeocoding = false;
+            this.isLoading = false;
         }
     }
 
