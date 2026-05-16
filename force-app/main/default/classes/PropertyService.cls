@@ -1,8 +1,8 @@
 public with sharing class PropertyService {
     public class PropertyFileInput {
-        @AuraEnabled public String fileName;
-        @AuraEnabled public String base64Data;
-        @AuraEnabled public String contentType;
+        @AuraEnabled public String fileName { get; set; }
+        @AuraEnabled public String base64Data { get; set; }
+        @AuraEnabled public String contentType { get; set; }
     }
 
     public class PropertyServiceException extends Exception {}

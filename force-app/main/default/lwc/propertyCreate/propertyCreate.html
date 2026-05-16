@@ -15,7 +15,7 @@
                 <lightning-input-field field-name="Rent__c"></lightning-input-field>
                 <lightning-input-field field-name="Description__c"></lightning-input-field>
                 <lightning-input type="file" label="Property Images" multiple accept="image/*" onchange={handleFiles}></lightning-input>
-                <lightning-button class="slds-m-top_medium" type="submit" variant="brand" label="Create Property" disabled={isSaving}></lightning-button>
+                <lightning-button class="slds-m-top_medium" type="submit" variant="brand" label="Create Property" disabled={disableSave}></lightning-button>
             </lightning-record-edit-form>
         </div>
     </lightning-card>
