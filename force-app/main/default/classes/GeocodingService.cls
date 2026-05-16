@@ -23,9 +23,18 @@ public with sharing class GeocodingService {
         }
 
         Map<String, Object> payload = (Map<String, Object>) JSON.deserializeUntyped(response.getBody());
+        String status = (String) payload.get('status');
+        if (!String.isBlank(status) && status != 'OK') {
+            String errorMessage = (String) payload.get('error_message');
+            throw new GeocodingException(
+                'Geocoding failed with status ' + status +
+                (String.isBlank(errorMessage) ? '.' : ': ' + errorMessage)
+            );
+        }
+
         List<Object> results = (List<Object>) payload.get('results');
         if (results == null || results.isEmpty()) {
-            return null;
+            throw new GeocodingException('Geocoding returned no matching location for address: ' + address);
         }
 
         Map<String, Object> firstResult = (Map<String, Object>) results[0];
