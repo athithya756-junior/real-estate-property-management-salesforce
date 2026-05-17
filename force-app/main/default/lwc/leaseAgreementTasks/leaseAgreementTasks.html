@@ -1,0 +1,15 @@
+<template>
+    <lightning-card title="Lease Tasks">
+        <template if:true={errorMessage}>
+            <div class="slds-p-around_medium">{errorMessage}</div>
+        </template>
+        <template if:true={hasTasks}>
+            <div class="slds-p-horizontal_medium slds-p-bottom_medium">
+                <lightning-datatable key-field="Id" data={tasks} columns={columns} hide-checkbox-column></lightning-datatable>
+            </div>
+        </template>
+        <template if:true={showEmptyState}>
+            <div class="slds-p-around_medium">No lease generation tasks are available.</div>
+        </template>
+    </lightning-card>
+</template>

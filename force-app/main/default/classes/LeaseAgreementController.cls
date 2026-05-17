@@ -1,4 +1,11 @@
 public with sharing class LeaseAgreementController {
+    private static final String LEASE_TASK_SUBJECT = 'Generate Lease Agreement';
+
+    @AuraEnabled(cacheable=true)
+    public static List<Lease_Agreement__c> getAgreements() {
+        return listAgreements();
+    }
+
     @AuraEnabled(cacheable=true)
     public static List<Lease_Agreement__c> listAgreements() {
         return [
@@ -22,6 +29,29 @@ public with sharing class LeaseAgreementController {
         ];
     }
 
+    @AuraEnabled(cacheable=true)
+    public static List<Task> listLeaseTasks(Id agreementId) {
+        if (agreementId == null) {
+            throw new AuraHandledException('Lease Agreement Id is required.');
+        }
+
+        Lease_Agreement__c agreement = [
+            SELECT Tenant__c
+            FROM Lease_Agreement__c
+            WHERE Id = :agreementId
+            LIMIT 1
+        ];
+
+        return [
+            SELECT Id, Subject, Status, Priority, ActivityDate, Description
+            FROM Task
+            WHERE WhatId = :agreement.Tenant__c
+            AND Subject = :LEASE_TASK_SUBJECT
+            ORDER BY CreatedDate DESC
+            LIMIT 200
+        ];
+    }
+
     @AuraEnabled
     public static Id createAgreement(Lease_Agreement__c agreement) {
         insert agreement;
@@ -31,5 +61,10 @@ public with sharing class LeaseAgreementController {
     @AuraEnabled
     public static void sendAgreementPdf(Id agreementId, String pdfBase64) {
         LeaseAgreementEmailService.sendLeasePdf(agreementId, pdfBase64);
+    }
+
+    @AuraEnabled
+    public static void sendLeaseEmail(Id leaseId, String base64Pdf) {
+        sendAgreementPdf(leaseId, base64Pdf);
     }
 }

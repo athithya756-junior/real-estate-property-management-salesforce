@@ -48,7 +48,19 @@
         <apexClass>TenantController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+    <classAccesses>
+        <apexClass>VendorController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>VendorAssignmentService</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
     <description>Access for Real Estate Property Management users.</description>
+    <externalCredentialPrincipalAccesses>
+        <enabled>true</enabled>
+        <externalCredentialPrincipal>Google_Geocoding_External-GoogleMapsKey</externalCredentialPrincipal>
+    </externalCredentialPrincipalAccesses>
     <fieldPermissions>
         <editable>true</editable>
         <field>Lease_Agreement__c.Status__c</field>
@@ -77,6 +89,16 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Property__c.Furnishing_Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Property__c.Latitude__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Property__c.Longitude__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -185,6 +207,10 @@
     </tabSettings>
     <tabSettings>
         <tab>Tenant__c</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+    <tabSettings>
+        <tab>Vendor_Management</tab>
         <visibility>Visible</visibility>
     </tabSettings>
     <tabSettings>

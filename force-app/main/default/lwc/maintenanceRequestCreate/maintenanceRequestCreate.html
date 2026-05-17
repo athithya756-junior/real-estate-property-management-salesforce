@@ -10,5 +10,8 @@
                 Request {createdRequest.Name} assigned to {createdRequest.Vendor__r.Name}.
             </div>
         </template>
+        <div class="slds-p-horizontal_medium slds-p-bottom_medium">
+            <lightning-datatable key-field="Id" data={requests} columns={columns} hide-checkbox-column></lightning-datatable>
+        </div>
     </lightning-card>
 </template>

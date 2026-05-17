@@ -1,0 +1,16 @@
+.form-grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: minmax(14rem, 1fr) minmax(22rem, 2fr) auto;
+    align-items: end;
+}
+
+.action-cell {
+    padding-bottom: 0.125rem;
+}
+
+@media (max-width: 60rem) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+}

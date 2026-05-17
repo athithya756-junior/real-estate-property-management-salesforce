@@ -1,0 +1,24 @@
+<template>
+    <lightning-card title="Assign Properties to Tenant">
+        <div class="slds-p-around_medium form-grid">
+            <lightning-combobox label="Tenant" value={tenantId} options={tenantOptions} onchange={handleTenantChange}></lightning-combobox>
+            <lightning-dual-listbox
+                label="Properties"
+                source-label="Available"
+                selected-label="Selected"
+                value={selectedPropertyIds}
+                options={propertyOptions}
+                onchange={handlePropertyChange}>
+            </lightning-dual-listbox>
+            <div class="action-cell">
+                <lightning-button label="Assign Properties" variant="brand" onclick={assignSelectedProperties} disabled={disableAssign}></lightning-button>
+            </div>
+        </div>
+
+        <template if:true={tenantId}>
+            <div class="slds-p-horizontal_medium slds-p-bottom_medium">
+                <lightning-datatable key-field="Id" data={leases} columns={columns} hide-checkbox-column></lightning-datatable>
+            </div>
+        </template>
+    </lightning-card>
+</template>

@@ -1,5 +1,8 @@
 public with sharing class LeaseAgreementEmailService {
+    @TestVisible private static Integer lastEmailMessageCount = 0;
+
     public static void sendLeasePdf(Id agreementId, String pdfBase64) {
+        lastEmailMessageCount = 0;
         Lease_Agreement__c agreement = LeaseAgreementController.getAgreement(agreementId);
         if (agreement.Tenant__r == null || String.isBlank(agreement.Tenant__r.Email__c)) {
             throw new AuraHandledException('Tenant email is required to send lease agreement.');
@@ -15,6 +18,7 @@ public with sharing class LeaseAgreementEmailService {
         email.setSubject('Lease Agreement ' + agreement.Name);
         email.setPlainTextBody('Please find the attached lease agreement for ' + agreement.Property__r.Name + '.');
         email.setFileAttachments(new List<Messaging.EmailFileAttachment>{ attachment });
+        lastEmailMessageCount = 1;
         Messaging.sendEmail(new List<Messaging.SingleEmailMessage>{ email });
     }
 
@@ -34,6 +38,7 @@ public with sharing class LeaseAgreementEmailService {
             emails.add(email);
         }
         if (!emails.isEmpty()) {
+            lastEmailMessageCount += emails.size();
             Messaging.sendEmail(emails);
         }
     }

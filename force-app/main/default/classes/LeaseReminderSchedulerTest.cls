@@ -8,9 +8,10 @@ private class LeaseReminderSchedulerTest {
         RealEstateTestDataFactory.createLease(propertyRecord, tenant, Date.today().addDays(1));
 
         Test.startTest();
+        LeaseAgreementEmailService.lastEmailMessageCount = 0;
         new LeaseReminderScheduler().execute(null);
         Test.stopTest();
 
-        System.assertEquals(2, Limits.getEmailInvocations());
+        System.assertEquals(2, LeaseAgreementEmailService.lastEmailMessageCount);
     }
 }

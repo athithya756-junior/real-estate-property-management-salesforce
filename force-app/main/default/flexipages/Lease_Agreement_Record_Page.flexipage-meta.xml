@@ -30,6 +30,12 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <componentName>c:leaseAgreementTasks</componentName>
+                <identifier>leaseAgreementTasks</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
                 <componentName>force:relatedListContainer</componentName>
                 <identifier>leaseRelatedLists</identifier>
             </componentInstance>

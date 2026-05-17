@@ -18,6 +18,7 @@
     <tabs>Tenant__c</tabs>
     <tabs>Lease_Agreement_Management</tabs>
     <tabs>Lease_Agreement__c</tabs>
+    <tabs>Vendor_Management</tabs>
     <tabs>Vendor__c</tabs>
     <tabs>Maintenance_Management</tabs>
     <tabs>Maintenance_Request__c</tabs>

@@ -1,0 +1,39 @@
+<template>
+    <lightning-card title="Tenant Details">
+        <template if:true={tenant}>
+            <dl class="detail-grid slds-p-around_medium">
+                <div>
+                    <dt>Tenant Name</dt>
+                    <dd>{tenant.Name}</dd>
+                </div>
+                <div>
+                    <dt>Phone Number</dt>
+                    <dd>
+                        <lightning-formatted-phone value={tenant.Phone__c}></lightning-formatted-phone>
+                    </dd>
+                </div>
+                <div>
+                    <dt>Email</dt>
+                    <dd>
+                        <lightning-formatted-email value={tenant.Email__c}></lightning-formatted-email>
+                    </dd>
+                </div>
+            </dl>
+        </template>
+        <template if:true={errorMessage}>
+            <div class="slds-p-around_medium">{errorMessage}</div>
+        </template>
+    </lightning-card>
+
+    <lightning-card title="Assigned Properties">
+        <div class="slds-p-horizontal_medium slds-p-bottom_medium">
+            <lightning-datatable key-field="Id" data={leases} columns={leaseColumns} hide-checkbox-column></lightning-datatable>
+        </div>
+    </lightning-card>
+
+    <lightning-card title="Lease Generation Tasks">
+        <div class="slds-p-horizontal_medium slds-p-bottom_medium">
+            <lightning-datatable key-field="Id" data={tasks} columns={taskColumns} hide-checkbox-column></lightning-datatable>
+        </div>
+    </lightning-card>
+</template>

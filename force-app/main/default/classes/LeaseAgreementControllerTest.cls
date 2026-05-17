@@ -25,8 +25,10 @@ private class LeaseAgreementControllerTest {
 
         System.assertNotEquals(null, firstId);
         System.assertNotEquals(null, secondId);
+        System.assertEquals(true, LeaseAgreementController.getAgreements().size() >= 2);
         System.assertEquals(2, [SELECT COUNT() FROM Lease_Agreement__c WHERE Tenant__c = :tenant.Id]);
-        System.assertEquals(2, [SELECT COUNT() FROM Task WHERE Subject = 'Generate lease agreement']);
+        System.assertEquals(2, [SELECT COUNT() FROM Task WHERE WhatId = :tenant.Id AND Subject = 'Generate Lease Agreement']);
+        System.assertEquals(2, LeaseAgreementController.listLeaseTasks(firstId).size());
         Set<Id> propertyIds = new Set<Id>{ firstProperty.Id, secondProperty.Id };
         System.assertEquals(2, [SELECT COUNT() FROM Property__c WHERE Id IN :propertyIds AND Status__c = 'Occupied']);
     }
@@ -57,7 +59,7 @@ private class LeaseAgreementControllerTest {
         insert agreements;
         Test.stopTest();
 
-        System.assertEquals(2, [SELECT COUNT() FROM Task WHERE Subject = 'Generate lease agreement']);
+        System.assertEquals(2, [SELECT COUNT() FROM Task WHERE WhatId = :tenant.Id AND Subject = 'Generate Lease Agreement']);
         Set<Id> propertyIds = new Map<Id, Property__c>(properties).keySet();
         System.assertEquals(2, [SELECT COUNT() FROM Property__c WHERE Id IN :propertyIds AND Status__c = 'Occupied']);
     }
@@ -69,9 +71,9 @@ private class LeaseAgreementControllerTest {
         Lease_Agreement__c agreement = RealEstateTestDataFactory.createLease(propertyRecord, tenant, Date.today().addMonths(12));
 
         Test.startTest();
-        LeaseAgreementController.sendAgreementPdf(agreement.Id, EncodingUtil.base64Encode(Blob.valueOf('pdf')));
+        LeaseAgreementController.sendLeaseEmail(agreement.Id, EncodingUtil.base64Encode(Blob.valueOf('pdf')));
         Test.stopTest();
 
-        System.assertEquals(1, Limits.getEmailInvocations());
+        System.assertEquals(1, LeaseAgreementEmailService.lastEmailMessageCount);
     }
 }

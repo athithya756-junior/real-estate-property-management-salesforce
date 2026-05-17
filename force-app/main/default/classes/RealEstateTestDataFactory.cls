@@ -32,6 +32,8 @@ public class RealEstateTestDataFactory {
         Property__c propertyRecord = buildProperty(nameSuffix);
         propertyRecord.Location__Latitude__s = 13.0827;
         propertyRecord.Location__Longitude__s = 80.2707;
+        propertyRecord.Latitude__c = 13.0827;
+        propertyRecord.Longitude__c = 80.2707;
         insert propertyRecord;
         return propertyRecord;
     }

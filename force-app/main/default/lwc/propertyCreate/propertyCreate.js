@@ -12,6 +12,17 @@ export default class PropertyCreate extends NavigationMixin(LightningElement) {
         return this.isSaving || this.isReadingFiles;
     }
 
+    get fileSummary() {
+        if (!this.files.length) {
+            return '';
+        }
+        return `${this.files.length} image(s) selected: ${this.files.map((file) => file.fileName).join(', ')}`;
+    }
+
+    get hasSelectedImages() {
+        return this.files.length > 0;
+    }
+
     async handleFiles(event) {
         const selectedFiles = Array.from(event.target.files || event.detail?.files || []);
         this.files = [];
@@ -24,6 +35,9 @@ export default class PropertyCreate extends NavigationMixin(LightningElement) {
         try {
             this.files = (await Promise.all(selectedFiles.map((file) => this.readFile(file))))
                 .filter((file) => file.fileName && file.base64Data);
+            if (this.files.length) {
+                this.toast('Images ready', `${this.files.length} image(s) selected.`, 'success');
+            }
         } catch (error) {
             this.toast('Unable to read image', error.message, 'error');
         } finally {
@@ -38,9 +52,11 @@ export default class PropertyCreate extends NavigationMixin(LightningElement) {
                 const dataUrl = String(reader.result || '');
                 const base64Data = dataUrl.includes(',') ? dataUrl.split(',')[1] : '';
                 resolve({
+                    key: `${file.name}-${file.size}-${file.lastModified}`,
                     fileName: file.name,
                     contentType: file.type || 'application/octet-stream',
-                    base64Data
+                    base64Data,
+                    previewUrl: dataUrl
                 });
             };
             reader.onerror = reject;
@@ -61,8 +77,14 @@ export default class PropertyCreate extends NavigationMixin(LightningElement) {
 
         this.isSaving = true;
         try {
-            const propertyId = await createProperty({ propertyRecord: event.detail.fields, files: this.files });
+            const files = this.files.map((file) => ({
+                fileName: file.fileName,
+                contentType: file.contentType,
+                base64Data: file.base64Data
+            }));
+            const propertyId = await createProperty({ propertyRecord: event.detail.fields, files });
             this.toast('Property created', 'The property and images were saved.', 'success');
+            this.dispatchEvent(new CustomEvent('propertycreated', { detail: { recordId: propertyId }, bubbles: true, composed: true }));
             this[NavigationMixin.Navigate]({
                 type: 'standard__recordPage',
                 attributes: { recordId: propertyId, objectApiName: 'Property__c', actionName: 'view' }

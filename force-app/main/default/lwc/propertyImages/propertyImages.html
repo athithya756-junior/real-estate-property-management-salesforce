@@ -1,0 +1,28 @@
+<template>
+    <lightning-card title="Property Images">
+        <template if:true={isLoading}>
+            <div class="slds-p-around_medium">
+                <lightning-spinner alternative-text="Loading property images" size="small"></lightning-spinner>
+            </div>
+        </template>
+
+        <template if:false={isLoading}>
+            <template if:true={hasImages}>
+                <div class="image-grid slds-p-around_medium">
+                    <template for:each={images} for:item="image">
+                        <a key={image.versionId} href={image.downloadUrl} target="_blank" class="image-tile">
+                            <img src={image.previewUrl} alt={image.title} />
+                            <span>{image.title}</span>
+                        </a>
+                    </template>
+                </div>
+            </template>
+            <template if:true={errorMessage}>
+                <div class="slds-p-around_medium">{errorMessage}</div>
+            </template>
+            <template if:true={showEmptyState}>
+                <div class="slds-p-around_medium">No property images are attached.</div>
+            </template>
+        </template>
+    </lightning-card>
+</template>

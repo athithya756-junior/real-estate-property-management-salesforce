@@ -20,7 +20,7 @@ private class ReportingControllerTest {
         ReportingController.DashboardMetrics metrics = ReportingController.getMetrics();
 
         System.assertEquals(1, metrics.expiringLeasesNext30Days);
-        System.assertEquals(50, metrics.occupancyRate);
+        System.assertEquals(Decimal.valueOf('50.0'), metrics.occupancyRate.setScale(1));
         System.assertEquals(1, metrics.maintenanceByStatus.get('Open'));
     }
 }

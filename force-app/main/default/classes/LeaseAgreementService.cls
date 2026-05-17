@@ -1,5 +1,5 @@
 public with sharing class LeaseAgreementService {
-    private static final String TASK_SUBJECT = 'Generate lease agreement';
+    private static final String TASK_SUBJECT = 'Generate Lease Agreement';
 
     public static void handleAfterInsert(List<Lease_Agreement__c> agreements) {
         createLeaseGenerationTasks(agreements);
@@ -9,12 +9,18 @@ public with sharing class LeaseAgreementService {
     private static void createLeaseGenerationTasks(List<Lease_Agreement__c> agreements) {
         List<Task> tasks = new List<Task>();
         for (Lease_Agreement__c agreement : agreements) {
+            if (agreement.Tenant__c == null) {
+                continue;
+            }
             tasks.add(new Task(
-                WhatId = agreement.Id,
+                WhatId = agreement.Tenant__c,
                 Subject = TASK_SUBJECT,
                 Status = 'Not Started',
                 Priority = 'Normal',
-                ActivityDate = Date.today().addDays(1)
+                ActivityDate = Date.today().addDays(1),
+                Description = 'Generate Lease Agreement for this tenant. Draft lease: /lightning/r/Lease_Agreement__c/' + agreement.Id + '/view' +
+                    (agreement.Property__c == null ? '' : ' and property ' + agreement.Property__c) +
+                    '. Complete the agreement details before sending the PDF.'
             ));
         }
         if (!tasks.isEmpty()) {

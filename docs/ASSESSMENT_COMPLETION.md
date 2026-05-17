@@ -9,20 +9,25 @@ This checklist maps the mini-project brief to the deployable project.
   - Property Management
   - Tenant Management
   - Lease Agreement Management
+  - Vendor Management
   - Maintenance Management
   - Real Estate Dashboard
 - Custom objects and tabs for Property, Tenant, Lease Agreement, Vendor, and Maintenance Request.
 - Permission set with app visibility, tab visibility, object CRUD, field access for deployable optional fields, and Apex class access.
 - Property list with server-side pagination of 25 records per page.
 - Property filters for rent, availability, furnishing status, and nearby distance.
-- Custom property creation flow with mandatory image upload.
+- Custom property creation flow with mandatory image upload saved as Salesforce Files.
+- Property list image count and property record image preview component.
 - Property geocoding and record-page map component.
 - Tenant list view.
+- Tenant Management property assignment flow for adding multiple properties to one tenant.
+- Tenant record page with phone, email, and assigned property lease rows.
 - Lease agreement list/create flow.
-- Task creation when a lease agreement is created from any entry point.
+- Task creation when a property is assigned to a tenant or when a lease agreement is created from any entry point.
 - Lease PDF download and email to tenant using jsPDF.
 - Scheduled Apex class for 30-day and 1-day lease expiry reminders.
-- Vendor and maintenance request objects.
+- Vendor management page to list/create vendors with name, phone, and email.
+- Maintenance management page to create requests and list tracked requests with property, assigned vendor, status, and description.
 - Automatic least-workload vendor assignment for maintenance requests.
 - Dashboard LWC for leases expiring in 30 days, maintenance requests by status, and occupancy rate.
 - Apex unit tests for the major server-side flows.

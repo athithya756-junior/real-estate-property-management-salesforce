@@ -8,12 +8,6 @@
                 <identifier>propertyList</identifier>
             </componentInstance>
         </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentName>c:propertyCreate</componentName>
-                <identifier>propertyCreate</identifier>
-            </componentInstance>
-        </itemInstances>
         <name>main</name>
         <type>Region</type>
     </flexiPageRegions>

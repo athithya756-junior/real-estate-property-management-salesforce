@@ -15,6 +15,19 @@
                 <lightning-input-field field-name="Rent__c"></lightning-input-field>
                 <lightning-input-field field-name="Description__c"></lightning-input-field>
                 <lightning-input type="file" label="Property Images" multiple accept="image/*" onchange={handleFiles}></lightning-input>
+                <template if:true={fileSummary}>
+                    <p class="slds-m-top_x-small slds-text-body_small">{fileSummary}</p>
+                </template>
+                <template if:true={hasSelectedImages}>
+                    <div class="preview-grid slds-m-top_small">
+                        <template for:each={files} for:item="file">
+                            <div key={file.key} class="preview-tile">
+                                <img src={file.previewUrl} alt={file.fileName} />
+                                <span>{file.fileName}</span>
+                            </div>
+                        </template>
+                    </div>
+                </template>
                 <lightning-button class="slds-m-top_medium" type="submit" variant="brand" label="Create Property" disabled={disableSave}></lightning-button>
             </lightning-record-edit-form>
         </div>

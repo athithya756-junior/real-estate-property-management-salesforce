@@ -1,0 +1,19 @@
+.detail-grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+}
+
+dt {
+    color: var(--lwc-colorTextLabel, #444);
+    font-weight: 700;
+}
+
+dd {
+    margin: 0.25rem 0 0;
+}
+
+lightning-card + lightning-card {
+    display: block;
+    margin-top: 1rem;
+}

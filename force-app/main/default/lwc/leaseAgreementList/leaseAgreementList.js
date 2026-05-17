@@ -36,7 +36,10 @@ export default class LeaseAgreementList extends LightningElement {
             searchProperties({ filter: { pageNumber: 1 } })
         ]);
         this.tenantOptions = tenants.map((tenant) => ({ label: tenant.Name, value: tenant.Id }));
-        this.propertyOptions = propertyPage.records.map((propertyRecord) => ({ label: propertyRecord.Name, value: propertyRecord.Id }));
+        this.propertyOptions = propertyPage.records.map((propertyRecord) => ({
+            label: propertyRecord.propertyName || propertyRecord.Name,
+            value: propertyRecord.propertyId || propertyRecord.Id
+        }));
     }
 
     async loadAgreements() {

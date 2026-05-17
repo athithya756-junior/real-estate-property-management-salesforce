@@ -4,11 +4,12 @@ Assessment-ready Salesforce DX implementation for a real estate property managem
 
 ## Features
 
-- Property management with required address, type, status, rent, description, geocoded location, and Salesforce Files images.
+- Property management with required address, type, status, rent, description, geocoded location, and required Salesforce Files images.
 - Server-side property pagination with 25 records per page.
 - Filters by price range, availability, furnishing status, and nearby distance in km.
-- Deployable Lightning app-page tabs for property management, tenant management, lease management, maintenance, and dashboard views.
+- Deployable Lightning app-page tabs for property management, tenant management, lease management, vendor management, maintenance, and dashboard views.
 - Tenant management, where one tenant can rent multiple properties through lease agreements.
+- Tenant property assignment flow that creates draft lease agreements and follow-up tasks to generate the final lease.
 - Lease agreement management with PDF download using `jsPDF`, manual email to tenant, and scheduled 30-day and 1-day expiry reminders.
 - Vendor management and maintenance requests with automatic least-workload vendor assignment.
 - Dashboard support for expiring leases, maintenance requests by status, and occupancy rate.
@@ -35,6 +36,7 @@ After deployment, open the **Real Estate Property Management** app. The app incl
 - Property Management
 - Tenant Management
 - Lease Agreement Management
+- Vendor Management
 - Maintenance Management
 - Real Estate Dashboard
 
@@ -87,10 +89,10 @@ sf apex run test --target-org real-estate-dev --test-level RunLocalTests --code-
 ## Demo Flow
 
 1. Assign `Real_Estate_Manager`.
-2. Create vendors, tenants, and properties.
-3. Create a property with images using `propertyCreate`.
-4. Open the property record and verify `propertyRecordMap`.
+2. Create vendors from Vendor Management, then create tenants and properties.
+3. Create a property with one or more images using `propertyCreate`.
+4. Open the property record and verify `propertyRecordMap` and `propertyImages`.
 5. Use `propertyList` filters and pagination.
-6. Create lease agreements and use PDF download/email actions.
-7. Create maintenance requests and verify automatic vendor assignment.
+6. Create lease agreements, open the tenant record to verify assigned properties, and use PDF download/email actions.
+7. Create maintenance requests and verify the request list shows property, vendor, status, and description.
 8. Review dashboard metrics through `reportingDashboard`.

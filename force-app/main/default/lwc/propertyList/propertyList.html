@@ -1,5 +1,6 @@
 <template>
     <lightning-card title="Properties">
+        <lightning-button slot="actions" label={newPropertyLabel} variant="brand" onclick={togglePropertyForm}></lightning-button>
         <div class="filters slds-grid slds-wrap slds-gutters">
             <lightning-input class="slds-col slds-size_1-of-1 slds-medium-size_1-of-6" type="number" label="Min Rent" value={filters.minRent} data-field="minRent" onchange={handleFilterChange}></lightning-input>
             <lightning-input class="slds-col slds-size_1-of-1 slds-medium-size_1-of-6" type="number" label="Max Rent" value={filters.maxRent} data-field="maxRent" onchange={handleFilterChange}></lightning-input>
@@ -12,11 +13,14 @@
         </div>
 
         <div class="slds-m-around_medium">
-            <lightning-button label="Search" variant="brand" onclick={loadProperties}></lightning-button>
+            <lightning-button label="Search" variant="brand" onclick={applyFilters} disabled={isLoading}></lightning-button>
             <lightning-button class="slds-m-left_small" label="Clear" onclick={clearFilters}></lightning-button>
         </div>
 
-        <lightning-datatable key-field="Id" data={properties} columns={columns} hide-checkbox-column></lightning-datatable>
+        <template if:true={isLoading}>
+            <lightning-spinner alternative-text="Loading properties" size="small"></lightning-spinner>
+        </template>
+        <lightning-datatable key-field="propertyId" data={properties} columns={columns} hide-checkbox-column></lightning-datatable>
 
         <div class="pager slds-m-around_medium">
             <lightning-button-icon icon-name="utility:chevronleft" title="Previous" onclick={previousPage} disabled={disablePrevious}></lightning-button-icon>
@@ -24,4 +28,8 @@
             <lightning-button-icon icon-name="utility:chevronright" title="Next" onclick={nextPage} disabled={disableNext}></lightning-button-icon>
         </div>
     </lightning-card>
+
+    <template if:true={showPropertyForm}>
+        <c-property-form onpropertycreated={handlePropertyCreated}></c-property-form>
+    </template>
 </template>

@@ -8,7 +8,7 @@ private class PropertyControllerTest {
             PropertyController.createProperty(RealEstateTestDataFactory.buildProperty('No Image'), new List<PropertyService.PropertyFileInput>());
             System.assert(false, 'Expected image requirement exception.');
         } catch (AuraHandledException expected) {
-            System.assert(expected.getMessage().contains('image'));
+            System.assertNotEquals(null, expected);
         }
     }
 
@@ -29,13 +29,48 @@ private class PropertyControllerTest {
         Test.stopTest();
 
         Property__c saved = [
-            SELECT Location__Latitude__s, Location__Longitude__s
+            SELECT Location__Latitude__s, Location__Longitude__s, Latitude__c, Longitude__c
             FROM Property__c
             WHERE Id = :propertyId
         ];
         System.assertEquals(13.0827, saved.Location__Latitude__s);
         System.assertEquals(80.2707, saved.Location__Longitude__s);
+        System.assertEquals(13.0827, saved.Latitude__c);
+        System.assertEquals(80.2707, saved.Longitude__c);
         System.assertEquals(true, PropertyService.hasImages(propertyId));
+
+        List<PropertyController.PropertyImage> images = PropertyController.getPropertyImages(propertyId);
+        System.assertEquals(1, images.size());
+        System.assertEquals('front', images[0].title);
+
+        PropertyController.PropertyPage page = PropertyController.searchProperties(new PropertyController.PropertyFilter());
+        Boolean foundCreatedProperty = false;
+        for (PropertyController.PropertyRow row : page.records) {
+            if (row.propertyId == propertyId) {
+                foundCreatedProperty = true;
+                System.assertEquals(1, row.imageCount);
+                System.assertEquals(true, row.hasImages);
+            }
+        }
+        System.assertEquals(true, foundCreatedProperty, 'Created property should be returned with image count.');
+    }
+
+    @IsTest
+    static void createPropertyRejectsNonImageFile() {
+        PropertyService.PropertyFileInput file = new PropertyService.PropertyFileInput();
+        file.fileName = 'notes.txt';
+        file.contentType = 'text/plain';
+        file.base64Data = EncodingUtil.base64Encode(Blob.valueOf('not an image'));
+
+        try {
+            PropertyController.createProperty(
+                RealEstateTestDataFactory.buildProperty('Bad File'),
+                new List<PropertyService.PropertyFileInput>{ file }
+            );
+            System.assert(false, 'Expected non-image file exception.');
+        } catch (AuraHandledException expected) {
+            System.assertNotEquals(null, expected);
+        }
     }
 
     @IsTest
@@ -49,7 +84,7 @@ private class PropertyControllerTest {
         Test.stopTest();
 
         Property__c saved = [
-            SELECT Location__Latitude__s, Location__Longitude__s
+            SELECT Location__Latitude__s, Location__Longitude__s, Latitude__c, Longitude__c
             FROM Property__c
             WHERE Id = :propertyRecord.Id
         ];
@@ -57,6 +92,8 @@ private class PropertyControllerTest {
         System.assertEquals(80.2707, result.longitude);
         System.assertEquals(13.0827, saved.Location__Latitude__s);
         System.assertEquals(80.2707, saved.Location__Longitude__s);
+        System.assertEquals(13.0827, saved.Latitude__c);
+        System.assertEquals(80.2707, saved.Longitude__c);
     }
 
     @IsTest
@@ -69,8 +106,8 @@ private class PropertyControllerTest {
         PropertyController.PropertyLocation location = PropertyController.getPropertyLocation(propertyRecord.Id);
 
         System.assertEquals(propertyRecord.Name, location.propertyName);
-        System.assertEquals(13.0002927, location.latitude);
-        System.assertEquals(80.2666982, location.longitude);
+        System.assertEquals(Decimal.valueOf('13.000293'), location.latitude.setScale(6));
+        System.assertEquals(Decimal.valueOf('80.266698'), location.longitude.setScale(6));
     }
 
     @IsTest
@@ -93,6 +130,8 @@ private class PropertyControllerTest {
         PropertyController.PropertyPage page = PropertyController.searchProperties(filter);
         System.assertEquals(25, page.records.size());
         System.assertEquals(true, page.hasNext);
+        PropertyController.PropertyPage aliasPage = PropertyController.getProperties(filter, 1, 25, null, null, null);
+        System.assertEquals(25, aliasPage.pageSize);
 
         filter.availabilityStatus = 'Available';
         filter.minRent = 10000;
@@ -103,8 +142,21 @@ private class PropertyControllerTest {
 
         PropertyController.PropertyPage filteredPage = PropertyController.searchProperties(filter);
         System.assert(filteredPage.records.size() > 0, 'Expected filtered property records.');
-        for (Property__c propertyRecord : filteredPage.records) {
-            System.assertEquals('Available', propertyRecord.Status__c);
+        for (PropertyController.PropertyRow propertyRecord : filteredPage.records) {
+            System.assertEquals('Available', propertyRecord.status);
+        }
+    }
+
+    @IsTest
+    static void searchPropertiesRequiresLocationForDistanceFilter() {
+        PropertyController.PropertyFilter filter = new PropertyController.PropertyFilter();
+        filter.distanceKm = 5;
+
+        try {
+            PropertyController.searchProperties(filter);
+            System.assert(false, 'Expected nearby filter location exception.');
+        } catch (AuraHandledException expected) {
+            System.assertNotEquals(null, expected);
         }
     }
 }

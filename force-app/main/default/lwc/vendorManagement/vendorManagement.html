@@ -1,0 +1,13 @@
+<template>
+    <lightning-card title="Vendors">
+        <div class="slds-p-around_medium form-grid">
+            <lightning-input label="Vendor Name" value={vendor.Name} data-field="Name" required onchange={handleChange}></lightning-input>
+            <lightning-input label="Phone Number" value={vendor.Phone__c} data-field="Phone__c" type="tel" onchange={handleChange}></lightning-input>
+            <lightning-input label="Email" value={vendor.Email__c} data-field="Email__c" type="email" onchange={handleChange}></lightning-input>
+            <lightning-button label="Create Vendor" variant="brand" onclick={saveVendor}></lightning-button>
+        </div>
+        <div class="slds-p-horizontal_medium slds-p-bottom_medium">
+            <lightning-datatable key-field="Id" data={vendors} columns={columns} hide-checkbox-column></lightning-datatable>
+        </div>
+    </lightning-card>
+</template>

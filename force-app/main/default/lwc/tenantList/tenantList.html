@@ -1,5 +1,6 @@
 <template>
     <lightning-card title="Tenants">
+        <lightning-button slot="actions" label="New Tenant" variant="brand" onclick={handleNewTenant}></lightning-button>
         <lightning-datatable key-field="Id" data={tenants} columns={columns} hide-checkbox-column></lightning-datatable>
     </lightning-card>
 </template>
