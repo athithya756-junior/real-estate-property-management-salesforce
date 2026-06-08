@@ -1,4 +1,4 @@
-import { LightningElement } from 'lwc';
+import { LightningElement,track } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import listAgreements from '@salesforce/apex/LeaseAgreementController.listAgreements';
 import createAgreement from '@salesforce/apex/LeaseAgreementController.createAgreement';
@@ -6,7 +6,7 @@ import listTenants from '@salesforce/apex/TenantController.listTenants';
 import searchProperties from '@salesforce/apex/PropertyController.searchProperties';
 
 export default class LeaseAgreementList extends LightningElement {
-    agreements = [];
+    @track agreements = [];
     tenantOptions = [];
     propertyOptions = [];
     agreement = { Status__c: 'Active' };
@@ -58,7 +58,7 @@ export default class LeaseAgreementList extends LightningElement {
 
     async saveAgreement() {
         try {
-            await createAgreement({ agreement: this.agreement });
+            let aggrementId = await createAgreement({ agreement: this.agreement });
             this.dispatchEvent(new ShowToastEvent({ title: 'Lease created', message: 'Task was also created for lease generation.', variant: 'success' }));
             this.agreement = { Status__c: 'Active' };
             await this.loadAgreements();

@@ -91,12 +91,12 @@ export default class PropertyList extends LightningElement {
 
     async applyFilters() {
         this.pageNumber = 1;
-        if (this.filters.distanceKm && (!this.filters.userLatitude || !this.filters.userLongitude)) {
-            const hasLocation = await this.useLocation();
-            if (!hasLocation) {
-                return;
-            }
-        }
+        // if (this.filters.distanceKm && (!this.filters.userLatitude || !this.filters.userLongitude)) {
+        //     const hasLocation = await this.useLocation();
+        //     if (!hasLocation) {
+        //         return;
+        //     }
+        // }
         await this.loadProperties();
     }
 

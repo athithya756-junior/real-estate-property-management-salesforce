@@ -1,5 +1,12 @@
+/**
+ * @description       : 
+ * @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+ * @group             : 
+ * @last modified on  : 06-07-2026
+ * @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+**/
 public with sharing class LeaseAgreementService {
-    private static final String TASK_SUBJECT = 'Generate Lease Agreement';
+    private static final String TASK_SUBJECT = 'Follow Up on Lease Agreement';
 
     public static void handleAfterInsert(List<Lease_Agreement__c> agreements) {
         createLeaseGenerationTasks(agreements);
@@ -9,11 +16,12 @@ public with sharing class LeaseAgreementService {
     private static void createLeaseGenerationTasks(List<Lease_Agreement__c> agreements) {
         List<Task> tasks = new List<Task>();
         for (Lease_Agreement__c agreement : agreements) {
-            if (agreement.Tenant__c == null) {
+            if (agreement.Tenant__c == null || agreement.Status__c != 'Draft') {
                 continue;
             }
             tasks.add(new Task(
-                WhatId = agreement.Tenant__c,
+                // WhatId = agreement.Tenant__c,
+                WhatId = agreement.Id,
                 Subject = TASK_SUBJECT,
                 Status = 'Not Started',
                 Priority = 'Normal',

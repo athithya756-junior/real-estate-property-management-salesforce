@@ -14,3 +14,7 @@
         grid-template-columns: 1fr;
     }
 }
+
+.combobox {
+    padding-bottom: 13rem;
+}

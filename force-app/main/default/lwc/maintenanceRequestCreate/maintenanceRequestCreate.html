@@ -1,9 +1,17 @@
+<!--
+  @description       : 
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             : 
+  @last modified on  : 06-07-2026
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+-->
 <template>
     <lightning-card title="Create Maintenance Request">
         <div class="slds-p-around_medium form-grid">
             <lightning-combobox label="Property" value={propertyId} options={propertyOptions} onchange={handleProperty}></lightning-combobox>
+            <lightning-combobox label="Vendor" value={vendorId} options={vendorOptions} onchange={handleVendor}></lightning-combobox>
             <lightning-textarea label="Description" value={description} onchange={handleDescription}></lightning-textarea>
-            <lightning-button label="Create Request" variant="brand" onclick={saveRequest}></lightning-button>
+            <lightning-button label="Create Request" variant="brand" onclick={saveRequest} class="adjust"></lightning-button>
         </div>
         <template if:true={createdRequest}>
             <div class="slds-p-around_medium">

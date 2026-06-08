@@ -1,12 +1,15 @@
 import { LightningElement } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import searchProperties from '@salesforce/apex/PropertyController.searchProperties';
+import listVendors from '@salesforce/apex/VendorController.listVendors';
 import listRequests from '@salesforce/apex/MaintenanceRequestController.listRequests';
 import createRequest from '@salesforce/apex/MaintenanceRequestController.createRequest';
 
 export default class MaintenanceRequestCreate extends LightningElement {
     propertyOptions = [];
+    vendorOptions = [];
     propertyId;
+    vendorId;
     description;
     createdRequest;
     requests = [];
@@ -21,11 +24,20 @@ export default class MaintenanceRequestCreate extends LightningElement {
     async connectedCallback() {
         const [page] = await Promise.all([
             searchProperties({ filter: { pageNumber: 1 } }),
-            this.loadRequests()
+            this.loadRequests(),
+            this.loadVendors()
         ]);
         this.propertyOptions = page.records.map((propertyRecord) => ({
             label: propertyRecord.propertyName || propertyRecord.Name,
             value: propertyRecord.propertyId || propertyRecord.Id
+        }));
+    }
+
+    async loadVendors() {
+        const records = await listVendors();
+        this.vendorOptions = records.map((vendor) => ({
+            label: vendor.Name,
+            value: vendor.Id
         }));
     }
 
@@ -43,17 +55,22 @@ export default class MaintenanceRequestCreate extends LightningElement {
         this.propertyId = event.detail.value;
     }
 
+    handleVendor(event) {
+        this.vendorId = event.detail.value;
+    }
+
     handleDescription(event) {
         this.description = event.detail.value;
     }
 
     async saveRequest() {
         try {
-            this.createdRequest = await createRequest({ propertyId: this.propertyId, description: this.description });
+            this.createdRequest = await createRequest({ propertyId: this.propertyId, vendorId: this.vendorId, description: this.description });
             const vendorName = this.createdRequest.Vendor__r?.Name || 'a vendor';
             this.dispatchEvent(new ShowToastEvent({ title: 'Request created', message: `Assigned to ${vendorName}.`, variant: 'success' }));
             this.propertyId = null;
             this.description = null;
+            this.vendorId = null;
             await this.loadRequests();
         } catch (error) {
             this.dispatchEvent(new ShowToastEvent({ title: 'Unable to create request', message: error.body?.message || error.message, variant: 'error' }));

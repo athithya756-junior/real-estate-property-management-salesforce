@@ -1,3 +1,10 @@
+/**
+ * @description       : 
+ * @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+ * @group             : 
+ * @last modified on  : 06-07-2026
+ * @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+**/
 public with sharing class GeocodingService {
     public class GeocodeResult {
         @AuraEnabled public Decimal latitude;
@@ -16,6 +23,8 @@ public with sharing class GeocodingService {
         request.setMethod('GET');
         request.setEndpoint(buildEndpoint(address));
         request.setTimeout(10000);
+
+        system.debug('Geocoding request URL: ' + request);
 
         HttpResponse response = new Http().send(request);
         if (response.getStatusCode() < 200 || response.getStatusCode() > 299) {

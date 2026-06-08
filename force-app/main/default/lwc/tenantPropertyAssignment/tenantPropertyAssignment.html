@@ -1,7 +1,14 @@
+<!--
+  @description       : 
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             : 
+  @last modified on  : 06-07-2026
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+-->
 <template>
     <lightning-card title="Assign Properties to Tenant">
         <div class="slds-p-around_medium form-grid">
-            <lightning-combobox label="Tenant" value={tenantId} options={tenantOptions} onchange={handleTenantChange}></lightning-combobox>
+            <lightning-combobox label="Tenant" value={tenantId} options={tenantOptions} onchange={handleTenantChange} class="combobox"></lightning-combobox>
             <lightning-dual-listbox
                 label="Properties"
                 source-label="Available"

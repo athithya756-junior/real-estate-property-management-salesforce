@@ -1,3 +1,10 @@
+/**
+ * @description       : 
+ * @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+ * @group             : 
+ * @last modified on  : 06-07-2026
+ * @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+**/
 public with sharing class LeaseAgreementEmailService {
     @TestVisible private static Integer lastEmailMessageCount = 0;
 
@@ -19,7 +26,11 @@ public with sharing class LeaseAgreementEmailService {
         email.setPlainTextBody('Please find the attached lease agreement for ' + agreement.Property__r.Name + '.');
         email.setFileAttachments(new List<Messaging.EmailFileAttachment>{ attachment });
         lastEmailMessageCount = 1;
-        Messaging.sendEmail(new List<Messaging.SingleEmailMessage>{ email });
+
+        Messaging.SendEmailResult[] results = Messaging.sendEmail(
+            new List<Messaging.SingleEmailMessage>{ email },
+            false
+        );
     }
 
     public static void sendReminder(List<Lease_Agreement__c> agreements, Integer daysBeforeExpiry) {

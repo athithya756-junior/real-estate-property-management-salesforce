@@ -1,3 +1,10 @@
+/**
+ * @description       : 
+ * @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+ * @group             : 
+ * @last modified on  : 06-07-2026
+ * @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+**/
 public with sharing class LeaseAgreementController {
     private static final String LEASE_TASK_SUBJECT = 'Generate Lease Agreement';
 
@@ -6,7 +13,7 @@ public with sharing class LeaseAgreementController {
         return listAgreements();
     }
 
-    @AuraEnabled(cacheable=true)
+    @AuraEnabled
     public static List<Lease_Agreement__c> listAgreements() {
         return [
             SELECT Id, Name, Tenant__c, Tenant__r.Name, Tenant__r.Email__c, Property__c, Property__r.Name,

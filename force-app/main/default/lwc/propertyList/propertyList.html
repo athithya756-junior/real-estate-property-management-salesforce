@@ -1,13 +1,23 @@
+<!--
+  @description       : 
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             : 
+  @last modified on  : 06-07-2026
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+-->
 <template>
     <lightning-card title="Properties">
         <lightning-button slot="actions" label={newPropertyLabel} variant="brand" onclick={togglePropertyForm}></lightning-button>
+        <template if:true={showPropertyForm}>
+            <c-property-form onpropertycreated={handlePropertyCreated}></c-property-form>
+        </template>
         <div class="filters slds-grid slds-wrap slds-gutters">
             <lightning-input class="slds-col slds-size_1-of-1 slds-medium-size_1-of-6" type="number" label="Min Rent" value={filters.minRent} data-field="minRent" onchange={handleFilterChange}></lightning-input>
             <lightning-input class="slds-col slds-size_1-of-1 slds-medium-size_1-of-6" type="number" label="Max Rent" value={filters.maxRent} data-field="maxRent" onchange={handleFilterChange}></lightning-input>
             <lightning-combobox class="slds-col slds-size_1-of-1 slds-medium-size_1-of-6" label="Availability" value={filters.availabilityStatus} options={statusOptions} data-field="availabilityStatus" onchange={handleFilterChange}></lightning-combobox>
             <lightning-combobox class="slds-col slds-size_1-of-1 slds-medium-size_1-of-6" label="Furnishing" value={filters.furnishingStatus} options={furnishingOptions} data-field="furnishingStatus" onchange={handleFilterChange}></lightning-combobox>
             <lightning-input class="slds-col slds-size_1-of-1 slds-medium-size_1-of-6" type="number" label="Nearby Km" value={filters.distanceKm} data-field="distanceKm" onchange={handleFilterChange}></lightning-input>
-            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-6 action-cell">
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-6 slds-p-top_large action-cell">
                 <lightning-button label="Use My Location" onclick={useLocation}></lightning-button>
             </div>
         </div>
@@ -29,7 +39,5 @@
         </div>
     </lightning-card>
 
-    <template if:true={showPropertyForm}>
-        <c-property-form onpropertycreated={handlePropertyCreated}></c-property-form>
-    </template>
+    
 </template>

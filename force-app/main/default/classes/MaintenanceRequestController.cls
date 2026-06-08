@@ -1,3 +1,10 @@
+/**
+ * @description       : 
+ * @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+ * @group             : 
+ * @last modified on  : 06-07-2026
+ * @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+**/
 public with sharing class MaintenanceRequestController {
     @AuraEnabled
     public static List<Maintenance_Request__c> listRequests() {
@@ -10,9 +17,12 @@ public with sharing class MaintenanceRequestController {
     }
 
     @AuraEnabled
-    public static Maintenance_Request__c createRequest(Id propertyId, String description) {
+    public static Maintenance_Request__c createRequest(Id propertyId, Id vendorId, String description) {
         if (propertyId == null) {
             throw new AuraHandledException('Select a property for the maintenance request.');
+        }
+        if (vendorId == null) {
+            throw new AuraHandledException('Select a vendor for the maintenance request.');
         }
         if (String.isBlank(description)) {
             throw new AuraHandledException('Enter a maintenance request description.');
@@ -20,6 +30,7 @@ public with sharing class MaintenanceRequestController {
 
         Maintenance_Request__c request = new Maintenance_Request__c(
             Property__c = propertyId,
+            Vendor__c = vendorId,
             Status__c = 'Open',
             Description__c = description
         );

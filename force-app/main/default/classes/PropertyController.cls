@@ -1,13 +1,31 @@
+/**
+ * @description       : 
+ * @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+ * @group             : 
+ * @last modified on  : 06-07-2026
+ * @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+**/
 public with sharing class PropertyController {
+    // public class PropertyFilter {
+    //     @AuraEnabled public Decimal minRent;
+    //     @AuraEnabled public Decimal maxRent;
+    //     @AuraEnabled public String availabilityStatus;
+    //     @AuraEnabled public String furnishingStatus;
+    //     @AuraEnabled public Decimal userLatitude;
+    //     @AuraEnabled public Decimal userLongitude;
+    //     @AuraEnabled public Decimal distanceKm;
+    //     @AuraEnabled public Integer pageNumber;
+    // }
+
     public class PropertyFilter {
-        @AuraEnabled public Decimal minRent;
-        @AuraEnabled public Decimal maxRent;
-        @AuraEnabled public String availabilityStatus;
-        @AuraEnabled public String furnishingStatus;
-        @AuraEnabled public Decimal userLatitude;
-        @AuraEnabled public Decimal userLongitude;
-        @AuraEnabled public Decimal distanceKm;
-        @AuraEnabled public Integer pageNumber;
+        @AuraEnabled public Decimal minRent { get; set; }
+        @AuraEnabled public Decimal maxRent { get; set; }
+        @AuraEnabled public String availabilityStatus { get; set; }
+        @AuraEnabled public String furnishingStatus { get; set; }
+        @AuraEnabled public Decimal userLatitude { get; set; }
+        @AuraEnabled public Decimal userLongitude { get; set; }
+        @AuraEnabled public Decimal distanceKm { get; set; }
+        @AuraEnabled public Integer pageNumber { get; set; }
     }
 
     public class PropertyPage {
